@@ -63,7 +63,16 @@ Section 11832 \quad December 6, 2023}
 \thispagestyle{empty}
 
 \begin{abstract}
-Abstract
+This study examines the relationship between the cant angle of a winglet and the lift-to-drag ratio of the airfoil section by using a calibrated dynamometer.
+The main objective of this experiment was to create a model for the relationship between the cant angle and the lift-to-drag ratio, $\bm{L/D}$.
+A secondary objective was to determine if adjusting the cant angle could lead to an optimal angle for maximizing the lift-to-drag ratio of the airfoil section.
+Winglets disrupt the formation of wingtip vortices and force the airflow to become more two-dimensional, reducing the induced drag of the wing.
+Unlike other wing features such as flaps and ailerons, winglets cannot be adjusted during flight to provide the most optimal setting for the aircraft.
+The theory behind this experiment is that by adjusting the cant angle, the most optimal performance during simulated cruise conditions can be achieved.
+It was found that the optimal cant angle for the performance of the wing was $\bm{42 \pm }\ang{1}$.
+The relative difference between theoretical data obtained using XFLR5 and the experimental data ranged from 6.4\% to 14.1\% for the values of the lift-to-drag ratio.
+This was caused by the surface roughness of the 3D printed wing section and the mounting equipment used to attach it to the dynamometer.
+The results showed that the lift-to-drag ratio slightly increased with the cant angle until reaching its optimal value, after which the parasitic drag caused by the attachment causes the ratio to decline in magnitude.
 \end{abstract}
 
 \begin{IEEEkeywords}
@@ -74,68 +83,131 @@ cant angle, lift-to-drag ratio, wingled, XFLR5
 \section{Introduction}
 
 
-\IEEEPARstart{A}{lthough} scale models are frequently placed in wind tunnels to predict flight characteristics of full-scale objects, experimenters should carefully consider if the flow conditions in a wind tunnel accurately represent performance in an unbounded free stream.
-Considerations such as solid blockage, wake blockage, and streamline curvature can affect the accuracy of results obtained from wind tunnel testing.
-This experiment had the objective of understanding how to calculate the lift, drag, and moment polars using pressure distribution data gathered using pressure taps and how to correct this data due to wind tunnel blockage.
-This report aims to compare this data to theoretical data and calculate the locations of the aerodynamic centers using the moment about the quarter chord for both uncorrected and corrected data.
+\IEEEPARstart{I}{n} the field of commercial aviation, more than 45,000 planes take off each day~\cite{FAA}.
+To reduce costs and promote more sustainable flights, airlines have consistently sought out ways to enhance the efficiency of their aircraft.
+One important measure of an aircraft's efficiency is its lift-to-drag ratio.
+A high lift-to-drag ratio allows an aircraft to carry larger payloads while requiring less thrust to overcome drag.
+One technique used in modern aircraft is the addition of winglets to the tips of the wings.
+These winglets disrupt the wingtip vortices and force the airflow to become more two-dimensional, reducing the induced drag on the wing~\cite{NASA}.
+Despite their use in the aviation industry for many years, there is a surprising lack of publications providing specific details on efficient winglet design.
+One consideration in winglet design is the winglet cant angle, which is the angle that the winglet makes with the span of the wing, as shown in Fig.~\ref{fig:cant}.
 
-The assumptions used for the calculations of the lift, drag, and moments are that the flow is steady, incompressible, and inviscid.
-The lift and drag can be derived from the pressure acting on the surface of the airfoil by using a numerical line integral along the top and bottom surfaces of the airfoil.
-This line integral presents some uncertainties generated through the approximation of the surface of the airfoil and pressure though some of this uncertainty is mitigated through the usage of length measurements from the manufacturer instead of hand measured data.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.45in]{cantDiag}
+    \caption{A simplified diagram that illustrates how the cant angle relates the orientation of the winglet to the span of the wing~\cite{cantDiag}.}
+    \label{fig:cant}
+\end{figure}
+\noindent
+Previous research has suggested that the lift-to-drag ratio generally increases with the cant angle.
+However, once the cant angle passes a certain point, the increase in friction drag begins to decrease the aerodynamic efficiency~\cite{variableCant}.
 
-The first correction considers the effect of solid blockage.
-This phenomenon occurs when the cross-sectional area of the object in the wind tunnel is a significant proportion of the test section area, with noticeable effects starting at 10\%~\cite{lab5r1}.
-The percent speed increase for an airfoil in the test section due to solid blockage, $\varepsilon_{sb}$, can be estimated by (eqsb), where $c$ is the chord length, $h$ is the tunnel height, and $\Lambda$ is the body shape factor of the airfoil as determined from Fig.~\ref{fig:shape}.
-
-\begin{equation}
-    \varepsilon_{sb} = \Lambda\left(\frac{\pi^2}{48}\right)\left(\frac{c}{h}\right)^2
+The experiment involved creating 3D printed wings with interchangeable winglets.
+These winglets had varying cant angles, ranging from 0 to 90 degrees.
+Fig.~\ref{fig:wing} shows an example of one of these wings.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.5in]{wing}
+    \caption{A 3D printed model of the wing used in the experiment. The specific configuration shown has a cant angle of \ang{40}.}
+    \label{fig:wing}
+\end{figure}
+\noindent
+The wind tunnel was adjusted to a desired Reynolds number of 100,000 by using the tunnel calibration coefficient determined previously~\cite{lab1}.
+The desired drop in static pressure was related to the Reynolds number using~\eqref{eq:eq1}, where $K$ is the tunnel calibration coefficient, $\nu$ is the dynamic viscosity of air, $\rho$ is the density of the air, $c$ is the chord length of the airfoil, and $Re$ is the desired Reynolds number.
+\begin{equation} \label{eq:eq1}
+    \Delta P = \frac{\frac{1}{2}\rho (1 - K)\nu^2}{c^2} {Re}^2
 \end{equation}
 
-\begin{figure}[H]
-    \centering
-    %\includegraphics[width=3.5in]{shapeFactor}
-    \caption{Body shape factor for common airfoil shapes~\cite{shape}.}
-    \label{fig:shape}
-\end{figure}
-
-Using Fig.~\ref{fig:shape}, a body shape factor $\Lambda$ of 0.23 was chosen for a NACA 0012 airfoil with a maximum thickness to chord ratio $t/c$ of 0.12.
-
-The next correction accounts for the effect of the wake generated by the object in the test section.
-Previous experiments have shown that the mean velocity in the wake region behind an object is lower than the freestream velocity as seen in Fig.~\ref{fig:profile}~\cite{lab3}.
-
-\begin{figure}[H]
-    \centering
-    %\input{figures/vProfile.tex}
-    \caption{Velocity profile behind a cylinder in uniform flow. This demonstrates the effect of wake blockage~\cite{lab3}.}
-    \label{fig:profile}
-\end{figure}
-
-The last correction considered in this experiment is accounting for the phenomenon known as streamline curvature.
-This occurs because the presence of the ceiling and floor of the test section prevents the normal curvature of the free air due to the lifting body~\cite{lab5r1}.
-This has the effect of overestimating the lift, the moment about the quarter chord, and the angle of attack.
+The objectives of this experiment included first characterizing the relationship between the winglet cant angle and the lift-to-drag ratio of a wing by determining an equation that properly represents the experimental data.
+The second objective was to use this equation to determine the optimal cant angle that maximizes the lift-to-drag ratio.
+Finally, the software XFLR5 was also used to compare theoretical data to experimental data.
 
 
 \section{Procedure}
 
-\subsection{Gathering Pressure Data Around the Airfoil}
+\subsection{Manufacturing of the Wing}
+
+The wing was 3D printed using a fused deposition modeling (FDM) printer in ASA thermoplastic.
+The model for the 3D print was created using the CAD software SolidWorks.
+It was divided into three sections, consisting of the wing base and two winglets.
+The selected airfoil was the NACA2415, and the wing was set at an angle of attack of 10 degrees.
+This angle of attack was selected to ensure that a non-negligible lift force would be generated by the airfoil.
+The wing base was designed with two hexagonal pins on each side, which were intended to press fit into the corresponding holes on the winglet pieces, as depicted in Fig.~\ref{fig:Airfoil}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.5in]{Airfoil}
+    \caption{SolidWorks 3D model of the wing section used in this experiment. The specific configuration shown has a cant angle of \ang{50}.}
+    \label{fig:Airfoil}
+\end{figure}
+
+The winglet pieces had ten different configurations with cant angles ranging from 0 to 90 degrees.
+Each configuration maintained a constant wingspan to ensure consistency across trials.
+A total of twenty winglet pieces were manufactured, with ten for each side of the wing.
+The chord length of the airfoil was $76.2 \pm \qty{0.2}{\mm}$, and the wingspan of the airfoil section was $139.8 \pm \qty{0.2}{\mm}$, as measured with calipers.
+A 10-24 male heat-set insert was mounted onto the wing base to allow for proper threading of the wing into the 10-24 threaded hole in the dynamometer.
+
+\subsection{Calibration of the Dynamometer}
+
+For this experiment, the dynamometer was calibrated for both lift and drag.
+To perform the calibration, metal weights were weighed using a scale.
+Once the weights were recorded, they were placed on the dynamometer, which was set up in a configuration such that the weight would be loaded perpendicular to the length of the stand for drag calculation, as shown in Fig.~\ref{fig:drag}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.5in]{drag}
+    \caption{Dynamometer setup for calibrating the drag calculation with a \qty{500}{\g} weight loaded.}
+    \label{fig:drag}
+\end{figure}
+
+A total of twelve different mass configurations were measured, ranging from \qty{0.000}{\kg} to \qty{2.270}{\kg}.
+The maximum mass corresponds to the maximum force that the dynamometer can measure.
+The weights were attached to the dynamometer using a hook attached to the weight itself.
+Additional weights needed to reach the desired weight were attached to the bottom of each weight using the hook.
+
+To zero the drag force, the drag LVDT wheel was adjusted until the voltage display read zero when no weight was loaded.
+Then, the maximum weight was placed on the dynamometer and the gain potentiometer was adjusted until a voltage of \qty{-10}{\V} was displayed.
+The weights were then removed, and the display was verified to show zero voltage.
+This process was repeated for each weight configuration.
+
+The same procedure was performed for the lift calibration, except this time the desired maximum voltage for the zero verification was \qty{10}{\V}.
+The dynamometer was also reoriented so that the weights acted parallel to the length of the dynamometer, in the lift direction by threading an eyebolt, as shown in Fig.~\ref{fig:lift}.
+The slope of the line obtained from both calibrations was then used to determine force values for the experiment.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.5in]{lift}
+    \caption{Dynamometer setup for calibrating the lift calculation with a \qty{200}{\g} weight loaded.}
+    \label{fig:lift}
+\end{figure}
+
+\subsection{Measuring Lift and Drag}
 
 The ambient pressure, relative humidity, and ambient temperature were recorded.
-The pressure transducer was calibrated to inches of water in the negative direction using the transducer's digital readout and a water manometer.
-The wind tunnel was then set to a relatively high Reynolds number of $241304 \pm 1304$ by using an empty test section and the static gauge pressure difference.
-A 4 inch chord length NACA 0012 was then placed into the middle of the test section height-wise as seen in Fig.~\ref{fig:section}.
+To measure the air velocity in the wind tunnel, the pressure transducer was calibrated in inches of water in the negative direction using the digital readout on the transducer and a water manometer.
+The desired Reynolds number for this experiment was 100,000 to simulate cruise conditions for an RC aircraft with the same chord length.
+To achieve this, the wind tunnel speed was adjusted until the pressure readout matched the desired static gauge pressure for the current ambient conditions.
+The zero drag and lift weight of the dynamometer were then recorded by placing the dynamometer in the wind tunnel and recording the voltages displayed on the pressure transducer.
+The wing base section was positioned in the test section by using the 10-24 male heat-set insert located at the back of the central span.
+Next, the appropriate winglet pieces with the specific cant angle were attached to the wing base, as shown in Fig.~\ref{fig:wingInside}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=3.5in]{wingInside}
+    \caption{Wing section with the \ang{40} winglets inside the test section of the wind tunnel.}
+    \label{fig:wingInside}
+\end{figure}
+\noindent
+The wind tunnel was set to the previously determined speed to ensure the correct Reynolds number was achieved.
+The lift and drag voltages were recorded, with care taken to tare out the zero lift and drag voltages.
+This process was repeated for each of the remaining cant angles.
 
-Starting at an angle of attack of zero degrees and the pre-determined Reynolds number, the static pressure at the nine attached pressure taps were measured at a sampling frequency of \qty{2000}{\Hz} for two seconds each.
-The angle of attack was then increased to three degrees, then five degrees, and finally seven degrees.
-After seven degrees the angle of attack was increased by one degree until the airfoil was at an angle of attack of thirteen degrees.
-For each angle of attack pressure reading, the negative angle of attack was also measured for its nine pressure taps.
-This was done at the same sampling rate and time as the previous readings.
-As a precaution against signal interference, each time the pressure channel was switched, a wait time of ten seconds was used so that the pressure readings would be accurate.
+\subsection{XFLR5 Simulation}
 
-\subsection{Post-Processing of Pressure Data}
-
-To process the data gathered during the wind tunnel tests, a Python script was used to take the average and calculate the uncertainty of the pressures for all taps at all angles of attack.
-The position of each port required for lift and drag calculation was obtained from Fig.~\ref{fig:AirfoilPorts}.
-The pressure and length data were then input into a spreadsheet where each pressure was converted into their respective lift and drag forces along with their moments.
+The wing was replicated in XFLR5 using the integrated plane design tool.
+The cant angle of the airfoil section was adjusted in XFLR5 using the dihedral angle option in the wing design section.
+The analysis method employed was the ring vortex method, with an airspeed of \qty{20}{\m\per\s}.
+The simulation was performed at an angle of attack of 10 degrees, to replicate the experimental setup.
+The coefficients of lift and drag were recorded for each cant angle during the simulation.
 
 
 \section{Results}
@@ -148,254 +220,224 @@ The measured atmospheric conditions are summarized in Table~\ref{tab:atmCond}.
 \begin{table}[H]
     \centering
     \caption{Atmospheric Conditions}
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1.4}
     \begin{tabular}{ccc}
     \toprule
     Parameter & Value & Uncertainty ($\pm$) \\ \midrule \midrule
-    $P_\text{amb}$ & \qty{767.70}{mm\ce{Hg}} & \qty{0.02}{mm\ce{Hg}} \\
-    $T$ & \qty{21.1}{\celsius} & \qty{0.1}{\celsius} \\
-    $\varphi$ & 49\% & 1\% \\ \bottomrule
+    $P_\text{amb}$ & \qty{764.10}{mm\ce{Hg}} & \qty{0.02}{mm\ce{Hg}} \\
+    $T$ & \qty{22.9}{\celsius} & \qty{0.1}{\celsius} \\
+    $\varphi$ & 40\% & 1\% \\ \bottomrule
     \end{tabular}
     \label{tab:atmCond}
 \end{table}
 
-The pressures measured around the NACA 0012 airfoil were converted into lift per unit span using the calculated lengths between ports $L^*$, and the pressures measured at the ports.
-Each lift value was summed with their negative angle of attack counterpart and plotted against their angle of attack in Fig.~\ref{fig:Lift}.
+To calibrate the dynamometer for lift and drag force measurements, twelve different mass configurations were used.
+These masses were loaded on the dynamometer in both its drag and lift configurations, as shown in Fig.~\ref{fig:drag} and \ref{fig:lift}, respectively.
+The masses were then converted into weights and plotted against their corresponding voltages for lift and drag as illustrated in Fig.~\ref{fig:calL} and \ref{fig:calD}, respectively.
 
-The pressures measured at the pressure taps were then converted into their respective drag forces at each angle of attack using the same method as the lift.
-The drag forces were then plotted against their angle of attack in Fig.~\ref{fig:Drag}.
+\begin{figure}[H]
+    \centering
+    \input{figures/liftCal.tex}
+    \caption{Lift voltage calibration plot with twelve weights plotted against the resulting voltages.}
+    \label{fig:calL}
+\end{figure}
 
-Using the lifts and drags generated, the moments of the airfoil's quarter chord can then be calculated and plotted against their respective angles of attack in Fig.~\ref{fig:Moment}.
+\begin{figure}[H]
+    \centering
+    \input{figures/dragCal.tex}
+    \caption{Drag voltage calibration plot with twelve weights plotted against the resulting voltages.}
+    \label{fig:calD}
+\end{figure}
+
+The wind tunnel was operated at a Reynolds number of $102000 \pm 287$, which was calculated using the dimensions of the airfoil section given in Table~\ref{tab:Data}.
+The chord length, $c$, the static pressure difference, $\Delta P$, the zero-weight voltage for lift, $V_{L_\text{tare}}$, and the zero-weight voltage for drag, $V_{D_\text{tare}}$, were recorded before experimenting.
+These values are tabulated in Table~\ref{tab:Data}.
+The lift and drag voltages for each cant angle are shown in Table~\ref{tab:Volt}.
+
+\begin{table}[H]
+    \centering
+    \caption{Reynolds Number Calculation Variables}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{ccc}
+    \toprule
+    Parameter & Value & Uncertainty ($\pm$) \\ \midrule \midrule
+    $c$ & \qty{76.2}{\mm} & \qty{0.5}{\mm} \\
+    $\Delta P$ & \qty{1.642}{in\ce{H_2O}} & \qty{0.002}{in\ce{H_2O}} \\
+    $V_{L_\text{tare}}$ & \qty{-8.203}{\V} & \qty{0.040}{\V} \\
+    $V_{D_\text{tare}}$ & \qty{3.762}{\V} & \qty{0.018}{\V} \\ \bottomrule
+    \end{tabular}
+    \label{tab:Data}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \caption{Lift and Drag Voltages}
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabular}{ccc}
+    \toprule
+    Cant Angle (\unit{\deg}) & Lift Voltage (\unit{V}) & Drag Voltage (\unit{V}) \\ \midrule \midrule
+    0  & $-9.006 \pm 0.003$ & $3.494 \pm 0.001$ \\
+    10 & $-9.010 \pm 0.003$ & $3.494 \pm 0.001$ \\
+    20 & $-9.010 \pm 0.003$ & $3.494 \pm 0.001$ \\
+    30 & $-9.011 \pm 0.003$ & $3.495 \pm 0.001$ \\
+    40 & $-9.014 \pm 0.003$ & $3.495 \pm 0.001$ \\
+    50 & $-9.010 \pm 0.003$ & $3.495 \pm 0.001$ \\
+    60 & $-8.998 \pm 0.003$ & $3.496 \pm 0.001$ \\
+    70 & $-8.998 \pm 0.003$ & $3.495 \pm 0.001$ \\
+    80 & $-8.997 \pm 0.003$ & $3.495 \pm 0.001$ \\
+    90 & $-8.997 \pm 0.003$ & $3.493 \pm 0.001$ \\ \bottomrule
+    \end{tabular}
+    \label{tab:Volt}
+\end{table}
+
+Using the XFLR5 airfoil section model and the analysis settings, the lift-to-drag ratio was determined for each cant angle at an angle of attack of 10 degrees.
+These results were then plotted against each other in Fig.~\ref{fig:Simu}.
+
+\begin{figure}[H]
+    \centering
+    \input{figures/XFLR5.tex}
+    \caption{The lift-to-drag ratio of the airfoil section at various cant angles as calculated by XFLR5.}
+    \label{fig:Simu}
+\end{figure}
 
 
 \section{Discussion}
 
-\subsection{Pressure Data Disclaimer}
+\subsection{Comparison of Experimental Data to XFLR5 Data}
 
-One important consideration is that the pressure port 1 on the airfoil was found to be blocked with debris, which gave inconsistent readings for the static pressure.
-This in turn affected all data coming from the pressure calculations.
-To remedy this, the pressure at port 1 was assumed to be the same as the pressure measured at port 2.
-This will allow an approximation of the lift, drag, and moment data.
-The effects of this approximation are an increase in drag, a decrease in calculated lift, and a decrease in the calculated moments.
+Generally, the experimental data exhibited the expected shape, which included a peak occurring at a cant angle of approximately \ang{40} and a subsequent decrease in the lift-to-drag ratio following this peak.
+The increase in the lift-to-drag ratio observed at cant angles below \ang{40} aligned with the theory that the presence of the winglets disrupted the wingtip vortices, resulting in an increase in the lift-to-drag ratio.
+Conversely, the decrease observed at high cant angles was consistent with the expectation that, at high cant angles, the increase in skin friction would outweigh the positive effects of implementing winglets in terms of the lift-to-drag ratio.
 
-\subsection{Aerodynamic Coefficients Calculation}
+Another observation is that the experimental data consistently yielded lower lift-to-drag ratios compared to the theoretical XFLR5 data for each cant angle, as illustrated by Fig.~\ref{fig:comp}.
+The percentage deviation between the experimental data and the XFLR5 data ranged from 6.4\% to 14.1\%.
+This discrepancy was attributed to the surface roughness in the wing caused by the FDM printing process, which created visible ridges in the wing.
+The surface roughness contributed to an increase in skin friction, consequently increasing the overall drag force experienced by the wing.
+Since the lift-to-drag ratio is inversely proportional to the drag force, this led to an underestimation of the overall lift-to-drag ratio as observed in the experimental data.
 
-To calculate the lift and drag, the position of each port on the airfoil must be known.
-The $y$-location of each port was determined using~\eqref{eq:airfoil}, where $x$ is the horizontal location of the pressure port given in Fig.~\ref{fig:AirfoilPorts} and $t$ is the maximum thickness of the airfoil as a fraction of the chord~\cite{AirfoilEq}.
+\begin{figure}[H]
+    \centering
+    \input{figures/bothStuff.tex}
+    \caption{Comparison of experimental lift-to-drag ratios with the theoretical ratios obtained from XFLR5 against varying cant angles.}
+    \label{fig:comp}
+\end{figure}
 
-\begin{equation} \label{eq:airfoil}
-    \resizebox{227pt}{!}{$\displaystyle{\pm y = 5t(0.2969\sqrt{x} - 0.126x - 0.3516x^2 + 0.2843x^3 - 0.1015x^4)}$}
+\subsection{Characterizing the Cant Angle Relationship}
+
+To determine an equation that would best represent the relationship between the winglet cant angle and the lift-to-drag efficiency ratio of the wing, several different theoretical models were tested to determine which was the most appropriate.
+The models considered included a linear, quadratic, cubic, and quartic model.
+The suitability of each model was assessed by analyzing the coefficient of determination obtained from performing a regression for each model.
+The coefficient of determination is a statistical variable used to evaluate how closely a linear regression matches the observed data~\cite{rSquare}.
+For a given data set with dependent values $y$, the coefficient of determination, $R^2$, can be determined using~\eqref{eq:R2}, where $y_i$ denotes an individual data point, $f_i$ is the predicted data point from the model, and $\bar{y}$ is the mean of the data.
+
+\begin{equation} \label{eq:R2}
+    R^2 = 1 - \frac{\sum_i \left(y_i - f_i\right)^2}{\sum_i \left(y_i - \bar{y}\right)^2}
 \end{equation}
 
-The maximum thickness $t$ is determined by dividing the last two digits of the four-digit denomination by 100~\cite{AirfoilEq}.
-For the NACA 0012, the maximum thickness is 12\% of the chord.
-Before calculating the $y$-location for each port, the $x$-location was normalized by dividing by chord length.
-This yields the normalized $y$-location of each port, which can be multiplied by the chord length to find the actual $y$-location.
+Fig.~\ref{fig:n1}, \ref{fig:n2}, \ref{fig:n3}, and \ref{fig:n4} show the resulting regression models plotted on top of the experimental data.
 
-To find the lift and drag coefficients, the pressure distribution over the surface of the airfoil must be integrated.
-Since pressure was measured at discrete points, the line integral for lift and drag was computed numerically using line integration.
-To do this, the length $L_i^*$ that a specific pressure acts over is required, where $i$ is the port number.
-This is determined by obtaining the horizontal distance $\Delta x_i$ and the vertical distance $\Delta y_i$ between the ports.
-A method similar to a midpoint integration scheme was used to find these values.
-For example, when calculating $\Delta x_i$ for the line that the pressure measured by port 2 acts over, the distance between the midpoint between ports 1 and 2 and the midpoint between ports 2 and 3 was used.
-For ports 1 and 9, the line was extended to meet the leading edge and trailing edge of the airfoil, respectively.
-Next,~\eqref{eq:airfoil} can be used to calculate the $y$ locations of each port. Then, the vertical distance $\Delta y_i$ was calculated using a similar method to $\Delta x_i$. Using these values, $L_i^*$ is computed using~\eqref{eq:Lstar}.
-\begin{equation} \label{eq:Lstar}
-    L_i^* = \sqrt{\left(\Delta x_i\right)^2 + \left(\Delta y_i\right)^2}
-\end{equation}
-The angle of the line that the pressure at a specific port acts over can now be calculated using~\eqref{eq:Theta}, where $\theta_i$ is the angle between the centerline of the airfoil and the line that the pressure measured at port $i$ acts.
-\begin{equation} \label{eq:Theta}
-    \theta_i = \arctan\left(\frac{\Delta y_i}{\Delta x_i}\right)
-\end{equation}
-Next, using~\eqref{eq:Gamma}, the angle $\gamma_i$ between the line that the pressure at port $i$ acts and the freestream is computed.
-\begin{equation} \label{eq:Gamma}
-    \gamma_i = \theta_i - \alpha
-\end{equation}
-Using these calculations, the lift forces $L'_i$ and drag forces $D'_i$  per unit span for each port $i$ can be calculated using~\eqref{eq:LiftF} and~\eqref{eq:DragF}.
-\begin{equation} \label{eq:LiftF}
-    L'_i = P_i L_i^* \cos\left(\gamma_i\right)
-\end{equation}
+\begin{figure}[H]
+    \centering
+    \input{figures/linear.tex}
+    \caption{Linear fit of the experimental data with $R^2 = 0.11$.}
+    \label{fig:n1}
+\end{figure}
 
-\begin{equation} \label{eq:DragF}
-    D'_i = P_i L_i^* \sin\left(\gamma_i\right)
-\end{equation}
-These calculated lift and drag forces are then summed for all ports at a specific angle of attack.
-Then, the positive angles of attack were combined with the same negative angles of attack.
-This is possible because the airfoil is symmetric and there are no ports on the bottom of the airfoil.
+\begin{figure}[H]
+    \centering
+    \input{figures/quadratic.tex}
+    \caption{Quadratic fit of the experimental data with $R^2 = 0.89$.}
+    \label{fig:n2}
+\end{figure}
 
-The moments at a specific port were calculated using~\eqref{eq:Moment}, where $M_i$ is the moment at port $i$, $x_i$ is the horizontal location of port $i$, $y_i$ is the horizontal location of port $i$, and $c$ is the chord length of the airfoil. The moments were taken about the quarter chord location.
-\begin{equation} \label{eq:Moment}
-    M_i = L'_i\left(x_i - \frac{c}{4}\right) + D'_iy_i
-\end{equation}
+\begin{figure}[H]
+    \centering
+    \input{figures/cubic.tex}
+    \caption{Cubic fit of the experimental data with $R^2 = 0.92$.}
+    \label{fig:n3}
+\end{figure}
 
-The coefficients of these values are calculated using~\eqref{eq:CL},~\eqref{eq:CD}, and~\eqref{eq:CM}, where $q$ is the dynamic pressure and $c$ is the chord of the airfoil.
-\begin{equation} \label{eq:CL}
-    C_L = \frac{L'}{qc}
-\end{equation}
-
-\begin{equation} \label{eq:CD}
-    C_D = \frac{D'}{qc}
-\end{equation}
-
-\begin{equation} \label{eq:CM}
-    C_M = \frac{M}{qc^2}
-\end{equation}
-
-\subsection{Wind Tunnel Correction}
-
-The XFLR5 software generates the flight characteristics of the NACA 0012 airfoil by assuming it is in an unbounded free stream.
-The experimental data was performed in the test section of a wind tunnel which causes performance deviation from the free stream assumption due to factors such as solid blockage, wake blockage, and streamline curvature.
-To account for these deviations, the following corrections were made to the data.
-
-Previous experimentation has suggested that the percent speed increase for flow outside of the wake boundary due to an airfoil, $\varepsilon_{wb}$, can be estimated by~\eqref{eq:wb}, where $c$ is the chord length, $h$ is the tunnel height, and $C_{Du}$ is the uncorrected drag coefficient~\cite{lab5r1}.
-\begin{equation} \label{eq:wb}
-    \varepsilon_{wb} = \frac{c/h}{2}C_{Du}
-\end{equation}
-Then, it is useful to define the total percent velocity increase due to solid blockage and wake blockage as $\varepsilon$, where $\varepsilon_{sb}$ is the percent velocity increase due to solid blockage and $\varepsilon_{wb}$ is the percent velocity increase due to wake blockage as seen in~\eqref{eq:ep}.
-\begin{equation} \label{eq:ep}
-    \varepsilon = \varepsilon_{sb} + \varepsilon_{wb}
-\end{equation}
-The freestream velocity ($U_\infty$), Reynolds number ($Re$), and dynamic pressure ($q$), can then be corrected with~\eqref{eq:Vu},~\eqref{eq:Reu}, and~\eqref{eq:qu} respectively, where a subscript of $u$ denotes the uncorrected corresponding value.
-\begin{equation} \label{eq:Vu}
-    U_\infty = U_{\infty u}(1 + \varepsilon)
-\end{equation}
-
-\begin{equation} \label{eq:Reu}
-    Re = Re_u(1 + \varepsilon)
-\end{equation}
-
-\begin{equation} \label{eq:qu}
-    q = q_u(1 + \varepsilon)
-\end{equation}
-To account for the deviations in the aerodynamic force coefficients and the angle of attack, it is useful to define the wind-tunnel correction parameter, $\sigma$, with~\eqref{eq:sigma} where $c$ is the chord length and $h$ is the height of the test section.
-\begin{equation} \label{eq:sigma}
-    \sigma = \left(\frac{\pi^2}{48}\right)\left(\frac{c}{h}\right)^2
-\end{equation}
-The angle of attack $\alpha$, coefficient of lift $C_L$, coefficient of drag $C_D$, and the moment coefficient about the quarter chord $C_{M\frac{1}{4}}$ can all be corrected with~\eqref{eq:alphau},~\eqref{eq:liftu},~\eqref{eq:dragu}, and~\eqref{eq:Mu} respectively where a subscript of $u$ notes the uncorrected value.
-\begin{equation} \label{eq:alphau}
-    \alpha = \alpha_u + \frac{57.3\sigma}{2\pi} \left(C_{Lu} + 4C_{M\frac{1}{4}}\right)
-\end{equation}
-
-\begin{equation} \label{eq:liftu}
-    C_L = C_{Lu} (1 - \sigma - 2\varepsilon)
-\end{equation}
-
-\begin{equation} \label{eq:dragu}
-    C_D = C_{Du} (1 - 3\varepsilon_{sb} - 2\varepsilon_{wb})
-\end{equation}
-
-\begin{equation} \label{eq:Mu}
-    C_{M\frac{1}{4}} = C_{M\frac{1}{4}u} (1 - 2\varepsilon) + \frac{1}{4}\sigma C_L  
-\end{equation}
-
-\subsection{XFLR5 Simulation of NACA 0012 Airfoil}
-
-To obtain theoretical data for the flight performance of the NACA 0012 airfoil, the XFLR5 version 6.56 analysis tool was used.
-While the original instructions were to use the XFOIL software, the team decided to opt for XFLR5 for its enhanced graphical user interface, familiarity with the software, and the fact that XFLR5 runs the XFOIL software in the background when performing calculations on 2D airfoils.
-This substitution was deemed acceptable by the instructors.
-
-To obtain the theoretical lift, drag, and moment polars, the 2D airfoil simulation was run at the same range of angle of attacks as the uncorrected data and at the same corrected Reynolds number of $241304 \pm 1304$ as in the experiment.
-
-\subsection{Comparison of Uncorrected, Corrected, and Theoretical Coefficients}
-
-For each of the lift, drag, and moment polars, the following sets of data were plotted: the uncorrected experimental data, the corrected experimental data, and the theoretical airfoil data from XFLR5.
-As can be seen in Fig.~\ref{fig:complift}, the uncorrected data aligned closer to the theoretical XFLR5 data than the original corrected data.
-However, the corrected data was found to be closer to the XFLR5 data for the drag and moment polars as seen in Fig.~\ref{fig:compdrag} and Fig.~\ref{fig:compmoment}. 
-
-The maximum coefficients of lift along with their errors for the uncorrected, corrected, and XFLR5 data are seen in Table~\ref{tab:max}.
-The maximum coefficient of lift for the corrected data, $C_{LC_\text{Max}}$, was found to be lower than the uncorrected data, $C_{LUC_\text{Max}}$.
-This is due to the altered pressure difference introduced by blockage effects.
-The angle of attack that the maximum coefficient takes place for the uncorrected and corrected data is $10 \pm \ang{0.1}$ and $10.2 \pm \ang{0.15}$, respectively.
-The XFLR5 maximum lift coefficient was calculated to be much higher than that of the experimental data, and it occurs at a higher angle of attack of \ang{12}.
-Because of the lack of a test section in XFLR5 and outside disturbances in the flow, XFLR5 simulates much closer to the assumed conditions made at the beginning of this report.
-XFLR5 tends to predict higher coefficients of lift than that of experimental calculations, which can introduce error into the data~\cite{XFOIL}.
-The same pattern can be seen with the coefficient of lift slope in Table~\ref{tab:max} for the uncorrected, $C_{LUC_\text{Slope}}$, and corrected data, $C_{LC_\text{Slope}}$.
-The corrected data results in a reduced slope of the lift coefficient, as both the coefficient and angle of attack are altered.
-Blockage in the wind tunnel causes the angle of attack to increase with the coefficient of lift and the moment about the quarter chord at that point.
-This causes the slope of the line to become less steep, hence the characteristics seen in Table~\ref{tab:max}.
+\begin{figure}[H]
+    \centering
+    \input{figures/quartic.tex}
+    \caption{Quartic fit of the experimental data with $R^2 = 0.93$.}
+    \label{fig:n4}
+\end{figure}
+\noindent
+The $R^2$ values for the four models are summarized in Table~\ref{tab:models}.
 
 \begin{table}[H]
     \centering
-    \caption{Coefficient of Lift Properties}
-    \renewcommand{\arraystretch}{1.2}
-    \begin{tabular}{ccc}
+    \caption{Coefficient of Determination for Each Model}
+    \renewcommand{\arraystretch}{1.1}
+    \begin{tabular}{cc}
     \toprule
-    Parameter & Value & Uncertainty ($\pm$) \\ \midrule \midrule
-    $C_{LUC_\text{Max}}$ & 0.904 & 0.04 \\
-    $C_{LC_\text{Max}}$ & 0.853 & 0.06 \\
-    $C_{XL_\text{Max}}$ & 1.096 & N/A \\
-    $C_{LUC_\text{Slope}}$ & \qty{0.087}{\per\degree} & \qty{0.003}{\per\degree} \\
-    $C_{LC_\text{Slope}}$ & \qty{0.079}{\per\degree} & \qty{0.005}{\per\degree} \\ \bottomrule
+    Model & Coefficient of Determination, $R^2$ \\ \midrule \midrule
+    Linear & 0.11 \\
+    Quadratic & 0.89 \\
+    Cubic & 0.92 \\
+    Quartic & 0.93 \\ \bottomrule
     \end{tabular}
-    \label{tab:max}
+    \label{tab:models}
 \end{table}
 
-The behavior of the coefficient of drag plots are highly exponential, as shown by Fig.~\ref{fig:compdrag}.
-The corrected data decreased the coefficient of drag of the airfoil.
-This brings it close in line to the XFLR5 data.
-This can be explained because the corrected data moves the stall point of the airfoil forward, as seen in Fig.~\ref{fig:complift}.
-The data becomes exponential sooner than the data gathered from XFLR5 because the stall point of the airfoil that was tested occurred much earlier than that of the XFLR5 data.
-This exponential behavior is observed only after the airfoil stalls.
-Therefore, it makes sense that this behavior is exhibited at a smaller angle of attack for the corrected and uncorrected data.
-The experimental coefficient of moments about the quarter chord, $C_{M\frac{1}{4}}$, exhibits similar behavior to its XFLR5 counterparts.
-It is lower than the XFLR5 data because of the decrease in lift force and increase in drag force provided by the airfoil.
-The moment coefficients drop to a negative value because the airfoil has reached its stall point.
-When the airfoil reaches this stall point, the drag force has a greater contribution to the moment than the lift force.
-The XFLR5 data does not exhibit this drop because it occurs slightly after stall which is not shown in the graph since its stall angle of attack is \ang{12}.
-This drop would occur at \ang{14}.
+From Table~\ref{tab:models}, the quartic model was the most accurate in fitting the experimental data, followed by the cubic model.
+This finding is consistent with the visual analysis of Fig.~\ref{fig:n3} and \ref{fig:n4}, where both models appear to closely match the experimental data.
+The regression for the quartic model resulted in~\eqref{eq:quartic} for the best fit polynomial, where ${L/D}_\text{quartic}$ is the predicted lift-to-drag ratio from the quartic model, and $\Gamma$ is the cant angle.
 
-\subsection{Aerodynamic Center of the Airfoil}
+\begin{equation} \label{eq:quartic}
+    \begin{split}
+        {L/D}_\text{quartic} &= (\num{4.0e-8})\Gamma^4 - (\num{9.0e-6})\Gamma^3 \\
+        &\quad + (\num{4.0e-4})\Gamma^2 + (\num{2.4e-3})\Gamma + 10.37
+    \end{split}
+\end{equation}
 
-The aerodynamic center of a symmetrical airfoil is theoretically located at the quarter chord of the airfoil~\cite{Symmetrical}.
-This is true at low Reynolds numbers.
-The Reynolds number used for this experiment is relatively high at a value of $241304 \pm 1304$.
-Because of this, the aerodynamic center will shift closer to the trailing edge of the airfoil.
-The location of the aerodynamic center was calculated by varying the quarter chord location used for the moment about the quarter chord calculations.
-The length was iteratively changed until all moments for each angle of attack summed to zero.
-The lengths along the chord found are listed in Table~\ref{tab:center}.
-The aerodynamic center was found to be closer to the trailing edge for the uncorrected data than that of the corrected data.
-The upwards shift in moment about the quarter chord caused by blockage corrections lessened the amount of length needed to bring the total sum of the moments to zero.
+\subsection{Determining the Optimal Winglet Cant Angle}
 
-\begin{table}[H]
-    \centering
-    \caption{Aerodynamic Center Distance From Leading Edge}
-    \renewcommand{\arraystretch}{1.2}
-    \begin{tabular}{ccc}
-    \toprule
-    Parameter & Value (in) & Relative Error (\%) \\ \midrule \midrule
-    $X_{AC_\text{Uncorrected}}$ & 1.134 & 2.84 \\
-    $X_{AC_\text{Corrected}}$ & 1.102 & 2.84 \\ \bottomrule
-    \end{tabular}
-    \label{tab:center}
-\end{table}
+To determine the theoretical optimal winglet cant angle, the local maximum of the quartic model was found.
+This was achieved by taking the derivative of the quartic model with respect to $\Gamma$, as shown in~\eqref{eq:derivative}.
+\begin{equation} \label{eq:derivative}
+    \begin{split}
+        \frac{d{L/D}_\text{quartic}}{d\Gamma} &= (\num{1.6e-7})\Gamma^3 - (\num{2.7e-5})\Gamma^2 \\
+        &\quad + (\num{8.0e-4})\Gamma + \num{2.4e-3}
+    \end{split}
+\end{equation}
+A local extremum occurs when the first derivative is equal to zero.
+Setting~\eqref{eq:derivative} equal to zero and solving for the roots of $\Gamma$ yields solutions at \ang{-2.74}, \ang{42.36}, and \ang{129.13}.
+Considering the bounds $\ang{0} \leq \Gamma \leq \ang{90}$ from the experimental data, the local maximum occurs at $42 \pm \ang{1}$.
+The model exhibits a maximum percent error of 2.3\% when compared to the experimental data.
+This error is associated with the \ang{80} cant angle.
+The fact that the percent error generally increased for higher cant angles indicates that high cant angle winglets may make the flow more turbulent, causing variability in the aerodynamic forces.
 
 
 \section{Conclusion}
 
 
-Ultimately, it was found that correcting the experimental data allowed the coefficient of drag, lift, and moment about the quarter chord to align closer to the theoretical data from XLFR5.
-However, the theoretical data was still outside of the uncertainty of the corrected data.
-One possible source of error was the fact that the first pressure port on the airfoil was giving unreliable data and was the static pressures recorded at port one was discarded as outlier data.
-The experiment continued with the assumption that the pressure at port one should be port two, but it is possible that this assumption may have created some systematic error.
-It was also seen that the airfoil stalled sooner than expected.
-This occurred because of the assumptions made when XFLR5 simulates an airfoil.
-Imperfections in the tested airfoil in lab could have also caused this to occur.
+Ultimately, it was found that the effect of winglet cant angle on the lift-to-drag ratio followed a quartic trend, with a peak occurring at an angle of about \ang{40}.
+The increase in the lift-to-drag ratio before this peak is due to the winglets disrupting the formation of wingtip vortices, which reduces the induced drag.
+However, if the cant angle is increased beyond this peak, it results in additional skin friction and a decrease in the lift-to-drag ratio.
 
-The corrected data accounted for the wind tunnel issues of solid blockage, wake blockage, and streamline curvature.
-However, there are additional considerations that were not corrected for this experiment.
-One such consideration is that of horizontal buoyancy where the boundary layer thickens towards the end of the test section and causes a static pressure gradient along the axis of the test section.
-While there are methods to correct for horizontal buoyancy, addressing the issue was considered outside of the scope of this experiment.
-It is possible that the percent error would have been even lower than reported if other considerations were considered.
-Another possible addition to this experiment that improves the accuracy is the introduction of more pressure ports around the tested airfoil.
-This will let the line integral approximation become more accurate.
-Operating at a higher Reynolds number would also decrease the chance of the velocity profile interfering with the data taken at the pressure ports.
+When comparing the experimental data to theoretical data obtained from XFLR5, it was observed that the shapes of both plots are similar, as shown in Fig.~\ref{fig:comp}.
+However, the lift-to-drag ratios for the experimental data were consistently lower than those of the theoretical data.
+This is likely due to the presence of ridges on the surface of the wing from the 3D printing process.
+The increase in surface roughness caused by these ridges increased the total drag force acting on the wing.
+Using a different 3D printing method such as stereolithography would reduce the prominence of these ridges and would yield drag forces closer to the theoretical data.
+
+Additionally, the method of mounting the wing to the dynamometer could be improved.
+In this experiment, tape was required to restrict the movement of the wing section, preventing it from spinning.
+To improve this, the orientation of the screw can be adjusted so that when fully threaded, the wing is in the correct orientation.
+This will eliminate any additional drag introduced by the tape.
+
+To further expand on the results of the experiment, the tips of the airfoil can be modified so that they transition from an airfoil cross-section to a closed edge.
+This can be done by tapering the edge of the airfoil section until it forms a sharp edge.
+This modification will decrease the parasitic drag generated by the wingtip, thus increasing efficiency impact that the wingtip has on the wing and making any efficiency gains more pronounced.
 
 
 \section*{Appendix A: Uncertainty Calculations}
 
 
 \begin{table}[H]
-    \renewcommand{\arraystretch}{2.1}
+    \renewcommand{\arraystretch}{1.35}
     \centering
     \caption{Summary of Measurement Uncertainties}
     \begin{tabular}{cccc}
@@ -405,108 +447,81 @@ Operating at a higher Reynolds number would also decrease the chance of the velo
     Humidity & $\mu \varphi$ & Digital & 1\% \\
     Ambient Pressure & $\mu P_\text{amb}$ & Barometer & \qty{0.02}{mm\ce{Hg}} \\
     \makecell{Static Pressure \\ Difference} & $\mu \Delta P$ & \makecell{95\% Conf. \\ Int.} & \qty{0.55}{\Pa} \\
-    Port Static Pressure & $\mu P$ & \makecell{95\% Conf. \\ Int.} & Variable \\
-    Dynamic Pressure & $\mu q$ & RSS & Variable \\
-    Saturation Pressure & $\mu P_g$ & RSS & \qty{16}{\pascal} \\
+    Saturation Pressure & $\mu P_g$ & RSS & \qty{15.22}{\pascal} \\
     Density & $\mu \rho$ & RSS & \qty{0.004}{\kg\per\m\cubed} \\
-    Freestream Velocity & $\mu U_\infty$ & RSS & \qty{0.04}{\m\per\s} \\
-    Airfoil Chord Length & $\mu L$ & Ruler & \qty{0.5}{\mm} \\
+    Airfoil Chord Length & $\mu c$ & Calipers & \qty{0.2}{\mm} \\
+    \makecell{Tunnel Calibration \\ Coefficient} & $\mu K$ & \cite{lab1} & 0.002 \\
     Kinematic Viscosity & $\mu \nu$ & \cite{HeatTrans} & \qty{2e-9}{\m\squared\per\s} \\
-    Reynolds Number & $\mu Re$ & RSS & 1304 \\
-    \makecell{Solid Blockage \\ Correction} & $\mu \varepsilon_{sb}$ & RSS & \num{1.64e-4} \\
-    \makecell{Wake Blockage \\ Correction} & $\mu \varepsilon_{wb}$ & RSS & Variable \\
-    \makecell{Overall Blockage \\ Correction} & $\mu \varepsilon$ & RSS & Variable \\
-    \makecell{Wind Tunnel \\ Correction Parameter} & $\mu \sigma$ & RSS & \num{7.11e-4} \\
-    Drag Force & $\mu D$ & RSS & Variable \\
-    \makecell{Uncorrected \\ Coefficient of Drag} & $\mu C_{Du}$ & RSS & Variable \\
-    \makecell{Corrected \\ Coefficient of Drag} & $\mu C_{D}$ & RSS & Variable \\
-    Lift Force & $\mu L$ & RSS & Variable \\
-    \makecell{Uncorrected \\ Coefficient of Lift} & $\mu C_{Lu}$ & RSS & Variable \\
-    \makecell{Corrected \\ Coefficient of Lift} & $\mu C_{L}$ & RSS & Variable \\
-    \makecell{Moment about the \\ Quarter Chord} & $\mu M_{\frac{1}{4}}$ & RSS & Variable \\
-    \makecell{Uncorrected Moment \\ Coefficient about \\ the Quarter Chord} & $\mu C_{M\frac{1}{4}u}$ & RSS & Variable \\
-    \makecell{Corrected Moment \\ Coefficient about \\ the Quarter Chord} & $\mu C_{M\frac{1}{4}}$ & RSS & Variable \\
-    \makecell{Max Coefficient of \\ Lift Uncorrected} & $\mu C_{LUC_\text{Max}}$ & Monte Carlo & 0.04 \\
-    \makecell{Max Coefficient of \\ Lift Corrected} & $\mu C_{LC_\text{Max}}$ & Monte Carlo & 0.06 \\
-    \makecell{Coefficient of Lift \\ Slope Uncorrected} & $\mu C_{LUC_\text{Slope}}$ & Monte Carlo & \qty{0.003}{\per\degree} \\
-    \makecell{Coefficient of Lift \\ Slope Corrected} & $\mu C_{LC_\text{Slope}}$ & Monte Carlo & \qty{0.005}{\per\degree} \\
-    Angle of Attack & $\mu \alpha$ & Protractor & \ang{0.1} \\ \bottomrule
+    Reynolds Number & $\mu Re$ & RSS & 184.4 \\
+    Lift & $\mu L$ & Max. \% Error & 0.81\% \\
+    Drag & $\mu D$ & Max. \% Error & 0.94\% \\
+    Lift-to-drag Ratio & $\mu L/D$ & RSS & Variable \\
+    Cant Angle & $\mu \Gamma$ & \cite{3Dangle} & \ang{1} \\
+    Voltage & $\mu V$ & \cite{Transduce} & 0.05\% of voltage \\ \bottomrule
     \end{tabular}
     \label{tab:uncertainty}
 \end{table}
 
 The uncertainties for each measured value are summarized in Table~\ref{tab:uncertainty}.
-First, the systemic bias in the reading of the transducer pressures readings was accounted for by zeroing the respective values in LabVIEW VI.
-The random uncertainty for each reading was then obtained by using a 95\% confidence interval with a normal distribution.
+First, the systemic bias in the reading of the transducer static pressure readings was accounted for by zeroing the pressure value in the LabVIEW VI.
+The random uncertainty for each static pressure reading was then obtained by using a 95\% confidence interval with a normal distribution.
 Because a sample size of 4000 was used for each reading, it was determined to be sufficiently large that the sample distribution approached the normal distribution according to the central limit theorem~\cite{MoMLecture}.
-A $z^*$ value of 1.96 was used for the calculation of the 95\% confidence interval~\cite{MoMLecture}.
-The margin of error then served as the uncertainty as seen in~\eqref{eq:conf}, where $\mu X$ is the margin of error for an arbitrary measurement, $S_x$ is the sample standard deviation, and $n$ is the number of samples~\cite{MoMLecture}.
+A $z^*$ value of 1.96 was used for the calculation of the 95\% confidence interval.
+The margin of error then served as the uncertainty, as seen in~\eqref{eq:conf}, where $\mu X$ is the margin of error for an arbitrary measurement, $S_x$ is the sample standard deviation, and $n$ is the number of samples~\cite{MoMLecture}.
 
 \begin{equation} \label{eq:conf}
     \mu X = z^* \frac{S_x}{\sqrt{n}}
 \end{equation}
 
-The uncertainties in the calculated dynamic pressures, $q$, were then calculated using the root sum squared (RSS) method as seen in~\eqref{eq:uq}, where $\Delta P$ is the change in static pressure and $k$ is the tunnel calibration coefficient that was determined previously~\cite{MoMLecture}.
-
-\begin{equation} \label{eq:uq}
-    \mu q = \left[\left(\mu \Delta P \frac{\partial q}{\partial \Delta P}\right)^2 + \left(\mu k \frac{\partial q}{\partial k}\right)^2\right]^{1/2}
-\end{equation}
-
-The uncertainty in the saturation pressure, $P_g$, was determined using error propagation theory as seen in~\eqref{eq:uPsat}, where $T$ is the ambient temperature~\cite{errorprop}.
+The uncertainty in the saturation pressure, $P_g$, was calculated using error propagation theory, as shown by~\eqref{eq:uPsat}, where $T$ is the ambient temperature~\cite{errorprop}.
 
 \begin{equation} \label{eq:uPsat}
     \mu P_g = \mu T \frac{\partial P_g}{\partial T}
 \end{equation}
 
-The uncertainty for the freestream velocity, $U_\infty$, was then calculated using the RSS method as seen in~\eqref{eq:uU}, where $q$ is the dynamic pressure and $\rho$ is the fluid density.
+The uncertainty in the fluid density, $\rho$, was calculated using the RSS method, as shown by~\eqref{eq:uRho}, where $P$ is the ambient pressure, $T$ is the ambient temperature, $\varphi$ is the relative humidity, and $P_g$ is the saturation pressure.
 
-\begin{equation} \label{eq:uU}
-    \mu U_\infty = \left[\left(\mu q \frac{\partial U_\infty}{\partial q}\right)^2 + \left(\mu \rho \frac{\partial U_\infty}{\partial \rho}\right)^2\right]^{1/2}
+\begin{equation} \label{eq:uRho}
+    \resizebox{227pt}{!}{$\displaystyle{\mu \rho = \left[\left(\mu P \frac{\partial \rho}{\partial P}\right)^2 + \left(\mu T \frac{\partial \rho}{\partial T}\right)^2 + \left(\mu \varphi \frac{\partial \rho}{\partial \varphi}\right)^2 + \left(\mu P_g \frac{\partial \rho}{\partial P_g}\right)^2\right]^{1/2}}$}
 \end{equation}
 
-The uncertainty for the Reynolds number, $Re$, was calculated using the RSS method as seen in~\eqref{eq:uRe}, where $U_\infty$ is the freestream velocity, $\nu$ is the dynamic viscosity of the fluid, and $L$ is the characteristic length.
+The uncertainty in the Reynolds number, $Re$, was calculated using the RSS method, as shown by~\eqref{eq:uRe}, where $\Delta P$ is the static pressure difference, $\nu$ is the dynamic viscosity of the fluid, $\rho$ is the density of the fluid, and $c$ is the chord length of the airfoil.
 
 \begin{equation} \label{eq:uRe}
-    \resizebox{227pt}{!}{$\displaystyle{\mu Re = \left[\left(\mu \nu \frac{\partial Re}{\partial \nu}\right)^2 + \left(\mu U_\infty \frac{\partial Re}{\partial U_\infty}\right)^2 + \left(\mu L \frac{\partial Re}{\partial L}\right)^2\right]^{1/2}}$}
+    \resizebox{227pt}{!}{$\displaystyle{\mu Re = \left[\left(\mu \Delta P \frac{\partial Re}{\partial \Delta P}\right)^2 + \left(\mu \nu \frac{\partial Re}{\partial \nu}\right)^2 + \left(\mu \rho \frac{\partial Re}{\partial \rho}\right)^2 + \left(\mu c \frac{\partial Re}{\partial c}\right)^2\right]^{1/2}}$}
 \end{equation}
 
-The uncertainty of the drag force, $D$, was calculated by finding the uncertainty in each portion of the numerical integral with the RSS method and then applying the RSS method to each portion as seen in~\eqref{eq:uFD}, where $P_i$ is the static pressure at port $i$.
+The uncertainties in the lift and drag values obtained from the dynamometer were determined by calculating the maximum percent error deviation from the calibration curve.
+As an example, Fig.~\ref{fig:calL} displays the calibration data, as well as the line of best fit that relates the voltage data to the weight. 
 
-\begin{equation} \label{eq:uFD}
-    \mu D = \left[\sum_{i=1}^9 \left(\mu P_i x_i \sin\left(\gamma_i\right)\right)^2\right]^{1/2}
+The percentage error between the actual calibration data and the line of best fit was calculated for each voltage point.
+It was determined that the line of best fit had a maximum percent error of 0.81\% at worst.
+Therefore, it was assumed that the interpolated lift values obtained from the voltage measurements from the dynamometer would have a percent error of 0.81\%.
+This uncertainty was applied to all the lift values in the experiment.
+A similar process was also conducted for the drag values.
+
+\pagebreak
+The uncertainty in the lift-to-drag ratio, $L/D$, was calculated using the RSS method, as shown by~\eqref{eq:uLD}, where $L$ is the interpolated lift force, and $D$ is the interpolated drag force.
+
+\begin{equation} \label{eq:uLD}
+    \mu L/D = \left[\left(\mu L \frac{\partial L/D}{\partial L}\right)^2 + \left(\mu D \frac{\partial L/D}{\partial D}\right)^2\right]^{1/2}
 \end{equation}
 
-The uncertainty of the uncorrected coefficient of drag, $\mu C_{Du}$, was calculated with the RSS method as seen in~\eqref{eq:uCDu}, where $D$ is the drag force, $L$ is the airfoil chord length, and $h$ is the height of the test section.
-
-\begin{equation} \label{eq:uCDu}
-    \resizebox{227pt}{!}{$\displaystyle{\mu C_{Du} = \left[\left(\mu D \frac{\partial C_{Du}}{\partial D}\right)^2 + \left(\mu L \frac{\partial C_{Du}}{\partial L}\right)^2 + \left(\mu h \frac{\partial C_{Du}}{\partial h}\right)^2\right]^{1/2}}$}
-\end{equation}
-
-The uncertainty of the corrected coefficient of drag, $\mu C_D$, was calculated with the RSS method as seen in~\eqref{eq:uCD}, where $C_{Du}$ is the uncorrected coefficient of drag, $\varepsilon_{sb}$ is the solid blockage correction, and $\varepsilon_{wb}$ is the wake blockage correction.
-
-\begin{equation} \label{eq:uCD}
-    \resizebox{227pt}{!}{$\displaystyle{\mu C_{D} = \left[\left(\mu C_{Du} \frac{\partial C_{D}}{\partial C_{Du}}\right)^2 + \left(\mu \varepsilon_{sb} \frac{\partial C_{D}}{\partial \varepsilon_{sb}}\right)^2 + \left(\mu \varepsilon_{wb} \frac{\partial C_{D}}{\partial \varepsilon_{wb}}\right)^2\right]^{1/2}}$}
-\end{equation}
-
-Similar calculations were done for the lift and moment about the quarter chord calculations.
-
-The uncertainty of the coefficient of lift slope for the corrected and uncorrected data was calculated using a five-point Monte Carlo simulation with 10000 iterations where the first five points for angle of attack were used.
-The Monte Carlo graph used to simulate the uncertainty in the slope are seen in Fig.~\ref{fig:Incorrect} and Fig.~\ref{fig:Correct}.
-
-\noindent
 This lab report was typeset using \LaTeX.
 
 \begin{thebibliography}{99}
-    \bibitem{lab5r1} Abbitt, J. D., ``Wind Tunnel Corrections - Part 1,'' \textit{University of Florida} [PowerPoint slides], URL: \url{https://ufl.instructure.com/courses/480244/files/77543932/}, 2023.
-    \bibitem{shape} Barlow, J. B., Rae, W. H., Pope, A., ``Boundary Corrections I: Basics and Two-Dimensional Cases'', \textit{Low-Speed Wind Tunnel Testing}, 3rd ed., Wiley, New York, 1999, p. 353.
-    \bibitem{lab3} Borg., A., Lam., B., Latzko, A., ``Characterizing the Wake Region of a Smooth Cylinder,'' \textit{University of Florida}, 2023.
-    \bibitem{ports} Abbitt, J. D., ``Airfoil Geometries,'' \textit{University of Florida} [PDF], URL: \url{https://ufl.instructure.com/courses/480244/files/77543942/}, 2023.
-    \bibitem{AirfoilEq} Jacobs, E. N., Ward, K. E., Pinkerton, R. M., ``The Characteristics of 78 Related Airfoil Sections from Tests in the Variable-Density Wind Tunnel,'' NACA Report No. 460, Jan 1933.
-    \bibitem{XFOIL} Barrett, R., and Ning, A., ``Comparison of Airfoil Precomputational Analysis Methods for Optimization of Wind Turbine Blades'', \textit{IEEE Transactions on Sustainable Energy}, Vol. 7, No. 3, Jul. 2016, pp. 1081--1088.
-    \bibitem{Symmetrical} Flandro, G. A., McMahon, H. M., Roach, R. L., ``Two-Dimensional Airfoils'', \textit{Basic Aerodynamics: Incompressible Flow}, Cambridge Univ. Press, New York, 2012, p. 194.
+    \bibitem{FAA} Federal Aviation Administration, ``Air Traffic By The Numbers,'' URL: \url{https://www.faa.gov/air_traffic/by_the_numbers}, Apr 2023.
+    \bibitem{NASA} Hall, N., ``Winglets,'' \textit{National Aeronautics and Space Administration}, URL: \url{https://www1.grc.nasa.gov/beginners-guide-to-aeronautics/winglets/}, 2023.
+    \bibitem{cantDiag} Myilsamy, D., Thirumalai, Y., and Premkumar, P. S., ``Performance Investigation of an Aircraft Wing at Various Cant Angles of Winglets using CFD Simulation,'' \textit{Altair Technology Conference 2015}, Banglore, India, 2015.
+    \bibitem{variableCant} Swargam, L., Kidron, M., Nandigam, M. L., and Dwivedi, Y. D., ``Effect of Variable Cant Angle on Sweepback Wing,'' \textit{Reviews on Modern Technologies for Aircraft and Aero-Engines}, Vol. 1, No. 9, Apr 2022, pp. 61--68.
+    \bibitem{rSquare} Glantz, S. A., Slinker, B. K., and Neilands, T. B., ``Selecting the `Best' Regression Model,'' \textit{Primer of Applied Regression and Analysis of Variance}, McGraw-Hill, New York, 2016, pp. 335--380.
+    \bibitem{3Dangle} Markforged, ``How to Create High Quality STL Files for 3D Prints,'' URL: \url{https://markforged.com/resources/blog/how-to-create-high-quality-stl-files-for-3d-prints}.
+    \bibitem{lab1} Borg., A., Lam., B., Latzko, A., ``Wind Tunnel Calibration for Prediction of Testing Conditions,'' \textit{University of Florida}, 2023.
     \bibitem{HeatTrans} Bergman, T. L., and Lavine, A. S., ``Appendix A: Thermophysical Properties of Matter,'' \textit{Fundamentals of Heat and Mass Transfer}, Wiley, Hoboken, NJ, 2017, p. 911.
     \bibitem{MoMLecture} Ridgeway, S., ``MOM\_lab Uncertainty basics w tension,'' \textit{University of Florida} [PowerPoint slides], URL: \url{https://ufl.instructure.com/courses/447927/files/65674680}, 2022.
     \bibitem{errorprop} Ku, H. H., ``Notes on the Use of Propagation of Error Formulas'', \textit{Journal of Research of the National Bureau of Standards}, Vol. 70C, No. 4, 27 May 1966, pp. 263--273.
+    \bibitem{Past} Guerrero, J. E., Sanguineti, M., and Wittkowski, K., ``Variable cant angle winglets for improvement of aircraft flight performance,'' \textit{Meccanica}, Vol. 55, No. 10, 2020, pp. 1917--1947.
+    \bibitem{Transduce} Schaevitz Sensors HR Series Data Sheet, Measurement Specialties, Inc., Hampton, VA, 2015.
 \end{thebibliography}
 
 \end{document}

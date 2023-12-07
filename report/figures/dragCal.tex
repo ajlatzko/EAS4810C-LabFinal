@@ -1,0 +1,62 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.65098,0.65098,0.65098}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.969\fwidth,
+height=\fheight,
+at={(0\fwidth,0\fheight)},
+xmin=-12,
+xmax=0,
+xlabel style={font=\color{white!15!black}\small},
+xlabel={Voltage (V)},
+ymin=0,
+ymax=25,
+ylabel style={font=\color{white!15!black}\small},
+ylabel={Weight (N)},
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+xmajorgrids,
+ymajorgrids,
+tick label style={font=\small}
+]
+\addplot [color=black, only marks, mark size=1.25pt, mark=*, mark options={solid, black}, forget plot]
+plot [error bars/.cd, x dir=both, x explicit, y dir=both, y explicit, error bar style={line width=0.5pt}, error mark options={line width=0.5pt, mark size=3.0pt, rotate=90}]
+table[row sep=crcr, y error index=2, x error index=3]{%
+-10.007	22.23927	0.000981	0.001\\
+-9.799	22.04307	0.000981	0.001\\
+-9.515	21.553551	0.000981	0.001\\
+-8.705	19.594494	0.000981	0.001\\
+-7.617	16.654437	0.000981	0.001\\
+-6.774	14.69538	0.000981	0.001\\
+-5.58	11.756304	0.000981	0.001\\
+-4.692	9.797247	0.000981	0.001\\
+-3.296	6.85719	0.000981	0.001\\
+-2.367	4.899114	0.000981	0.001\\
+-0.972	1.960038	0.000981	0.001\\
+-0.041	0	0.000981	0.001\\
+};
+\addplot [color=mycolor1, line width=2.0pt, forget plot]
+  table[row sep=crcr]{%
+-10.007	22.2862911392079\\
+-9.799	21.8130924774941\\
+-9.515	21.1669943047695\\
+-8.705	19.3242495163647\\
+-7.617	16.8490565166309\\
+-6.774	14.9312369405504\\
+-5.58	12.2148946228278\\
+-4.692	10.1947003362804\\
+-3.296	7.0188093182396\\
+-2.367	4.90534029548896\\
+-0.972	1.73172427101409\\
+-0.041	-0.386294738868412\\
+};
+\end{axis}
+\end{tikzpicture}%

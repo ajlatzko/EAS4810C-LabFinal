@@ -1,0 +1,64 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.85000,0.32500,0.09800}%
+\definecolor{mycolor2}{rgb}{0.98039,0.27451,0.08627}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.969\fwidth,
+height=\fheight,
+at={(0\fwidth,0\fheight)},
+xmin=0,
+xmax=100,
+xlabel style={font=\color{white!15!black}\small},
+xlabel={Cant Angle (deg)},
+ymin=9,
+ymax=13,
+ylabel style={font=\color{white!15!black}\small},
+ylabel={$L/D$},
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+xmajorgrids,
+ymajorgrids,
+tick label style={font=\small},
+legend style={legend cell align=left, align=left, draw=white!15!black, font=\small}
+]
+\addplot [color=black, only marks, mark size=1.7pt, mark=*, mark options={solid, black}]
+  table[row sep=crcr]{%
+0	11.64853273\\
+10	11.81669992\\
+20	11.85528946\\
+30	11.87318544\\
+40	11.90900866\\
+50	11.8073117\\
+60	11.67565529\\
+70	11.51966778\\
+80	11.34330254\\
+90	11.29101694\\
+};
+\addlegendentry{XFLR5}
+
+\addplot [color=black, only marks, mark size=2pt, mark=diamond*, mark options={solid, fill=mycolor2, draw=mycolor2}]
+plot [error bars/.cd, x dir=both, x explicit, y dir=both, y explicit, error bar style={line width=0.5pt}, error mark options={line width=0.5pt, mark size=3.0pt, rotate=90}]
+table[row sep=crcr, y error index=2, x error index=3]{%
+0	10.36862817	0.034216472961	1\\
+10	10.4378036	0.03444475188	1\\
+20	10.44548976	0.034470116208	1\\
+30	10.63946302	0.035110227966	1\\
+40	10.69422496	0.035290942368	1\\
+50	10.62381675	0.035058595275	1\\
+60	10.60152292	0.034985025636	1\\
+70	10.41259212	0.034361553996	1\\
+80	10.390625	0.0342890625	1\\
+90	10.07575758	0.033250000014	1\\
+};
+\addlegendentry{Experimental}
+
+\end{axis}
+\end{tikzpicture}%

@@ -1,0 +1,49 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.969\fwidth,
+height=\fheight,
+at={(0\fwidth,0\fheight)},
+xmin=0,
+xmax=90,
+xlabel style={font=\color{white!15!black}\small},
+xlabel={Cant Angle (deg)},
+xtick={0,15,...,90},
+ymin=11.2,
+ymax=12,
+ylabel style={font=\color{white!15!black}\small},
+ylabel={$L/D$},
+yticklabel style={
+            /pgf/number format/fixed,
+            /pgf/number format/precision=1,
+            /pgf/number format/fixed zerofill
+        },
+scaled y ticks=false,
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+xmajorgrids,
+ymajorgrids,
+tick label style={font=\small}
+]
+\addplot [color=black, only marks, mark size=1.7pt, mark=*, mark options={solid, black}, forget plot]
+  table[row sep=crcr]{%
+0	11.64853273\\
+10	11.81669992\\
+20	11.85528946\\
+30	11.87318544\\
+40	11.90900866\\
+50	11.8073117\\
+60	11.67565529\\
+70	11.51966778\\
+80	11.34330254\\
+90	11.29101694\\
+};
+\end{axis}
+\end{tikzpicture}%

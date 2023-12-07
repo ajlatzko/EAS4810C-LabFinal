@@ -1,0 +1,59 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.44700,0.74100}%
+\definecolor{mycolor2}{rgb}{0.98039,0.27451,0.08627}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=0.969\fwidth,
+height=\fheight,
+at={(0\fwidth,0\fheight)},
+xmin=0,
+xmax=90,
+xlabel style={font=\color{white!15!black}\small},
+xlabel={Cant Angle (deg)},
+xtick={0,15,...,90},
+ymin=10,
+ymax=10.8,
+ylabel style={font=\color{white!15!black}\small},
+ylabel={$L/D$},
+axis background/.style={fill=white},
+axis x line*=bottom,
+axis y line*=left,
+xmajorgrids,
+ymajorgrids,
+tick label style={font=\small}
+]
+\addplot [color=mycolor1, only marks, mark=square*, mark options={solid, fill=mycolor2, draw=mycolor2}, forget plot]
+  table[row sep=crcr]{%
+0	10.36862817\\
+10	10.4378036\\
+20	10.44548976\\
+30	10.63946302\\
+40	10.69422496\\
+50	10.62381675\\
+60	10.60152292\\
+70	10.41259212\\
+80	10.390625\\
+90	10.07575758\\
+};
+\addplot [color=black, line width=2.0pt, forget plot]
+  table[row sep=crcr]{%
+0	10.5593960849091\\
+10	10.5393063744848\\
+20	10.5192166640606\\
+30	10.4991269536364\\
+40	10.4790372432121\\
+50	10.4589475327879\\
+60	10.4388578223636\\
+70	10.4187681119394\\
+80	10.3986784015152\\
+90	10.3785886910909\\
+};
+\end{axis}
+\end{tikzpicture}%
